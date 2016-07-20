@@ -1,0 +1,174 @@
+
+.btn,
+.btn:link,
+.btn:visited {
+  border-style: solid;
+  border-width: 1px;
+  color: #111;
+  display: inline-block;
+  letter-spacing: .15em;
+  margin-bottom: .5em;
+  padding: 0.25em 1em;
+  text-decoration: none;
+  -webkit-transition: color .4s, background-color .4s, border .4s;
+          transition: color .4s, background-color .4s, border .4s;
+}
+
+.btn:hover {
+  color: #000;
+  border: 1px solid #000;
+  -webkit-transition: background-color .3s, color .3s, border .3s;
+          transition: background-color .3s, color .3s, border .3s;
+}
+
+.btn:active {
+  color: #000;
+  border: 1px solid #000;
+  -webkit-transition: background-color .3s, color .3s, border .3s;
+          transition: background-color .3s, color .3s, border .3s;
+}
+
+
+.inpt{
+  margin:3px;
+  border:0;
+  padding:2px;
+  display:inline-block;
+  vertical-align:middle;
+  white-space:normal;
+  background:none;
+  line-height:1;
+  border-bottom: 1px solid #aaa;
+  
+  /* Browsers have different default form fonts */
+  font-family:Arial;
+}
+
+/* Remove the stupid outer glow in Webkit */
+.inpt:focus
+{
+  outline:0;
+  border-bottom: 1px solid #555;
+}
+
+.static { position: static; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+@media screen and (min-width: 48em) {
+ .static-ns { position: static; }
+ .relative-ns { position: relative; }
+ .absolute-ns { position: absolute; }
+ .fixed-ns { position: fixed; }
+}
+@media screen and (min-width: 48em) and (max-width: 64em) {
+ .static-m { position: static; }
+ .relative-m { position: relative; }
+ .absolute-m { position: absolute; }
+ .fixed-m { position: fixed; }
+}
+@media screen and (min-width: 64em) {
+ .static-l { position: static; }
+ .relative-l { position: relative; }
+ .absolute-l { position: absolute; }
+ .fixed-l { position: fixed; }
+}
+
+.f7 {
+  font-size: .75rem;
+}
+
+.f8 {
+  font-size: .70rem;
+}
+
+
+.no-display {
+  display: none;
+}
+
+
+
+.menu{
+  text-align: left;
+  display: inline;
+  margin: 0;
+  padding: 15px 4px 17px 0;
+  list-style: none;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  font: bold 12px/18px sans-serif;
+  display: inline-block;
+  margin-right: -4px;
+  position: relative;
+  padding: 15px 20px;
+  background: #fff;
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.menu:hover {
+  background: #555;
+  color: #fff;
+}
+
+.menu ul {
+    padding: 0;
+  position: absolute;
+
+  left: 0;
+  width: 150px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transiton: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -transition: opacity 0.2s;
+  
+}
+.menu ul li { 
+  background: #555; 
+  display: block; 
+  color: #fff;
+  text-shadow: 0 -1px 0 #000;
+}
+.menu ul li:hover { background: #666; }
+.menu:hover ul {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+.hlayer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.2);
+}
+
+
+/* https://github.com/tachyons-css/tachyons-z-index */
+.z-0 { z-index: 0; }
+.z-1 { z-index: 1; }
+.z-2 { z-index: 2; }
+.z-3 { z-index: 3; }
+.z-4 { z-index: 4; }
+.z-5 { z-index: 5; }
+.z-999 { z-index: 999; }
+.z-9999 { z-index: 9999; }
+.z-max { z-index: 2147483647; }
+.z-inherit { z-index: inherit; }
+.z-initial { z-index: initial; }
+.z-unset { z-index: unset; }
