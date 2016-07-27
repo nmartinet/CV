@@ -1,27 +1,245 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>reactr</title>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" href="css/tachyons.min.css">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="libs/jquery.js"></script>
-  <script src="libs/lodash.js"></script>
-  <script src="libs/react.js"></script>
-  <script src="libs/react-dom.js"></script>
-  <script src="libs/react-dom-server.min.js"></script>
-  <script src="libs/babel.min.js"></script>
-  <script src="libs/polyfill.min.js"></script>
-  <script src="libs/browser.min.js"></script>
-  <script src="libs/ace.js"></script>
-  <script src="libs/showdown.min.js"></script>
-</head><body>
+<title>radiatr</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.0.2/tachyons.min.css">
+<style type='text/css' id='app-css'>
+  .btn,
+  .btn:link,
+  .btn:visited {
+    border-style: solid;
+    border-width: 1px;
+    color: #111;
+    display: inline-block;
+    letter-spacing: .15em;
+    margin-bottom: .5em;
+    padding: 0.25em 1em;
+    text-decoration: none;
+    -webkit-transition: color .4s, background-color .4s, border .4s;
+            transition: color .4s, background-color .4s, border .4s;
+  }
 
+  .btn:hover {
+    color: #000;
+    border: 1px solid #000;
+    -webkit-transition: background-color .3s, color .3s, border .3s;
+            transition: background-color .3s, color .3s, border .3s;
+  }
+
+  .btn:active {
+    color: #000;
+    border: 1px solid #000;
+    -webkit-transition: background-color .3s, color .3s, border .3s;
+            transition: background-color .3s, color .3s, border .3s;
+  }
+
+
+  .inpt{
+    margin:3px;
+    border:0;
+    padding:2px;
+    display:inline-block;
+    vertical-align:middle;
+    white-space:normal;
+    background:none;
+    line-height:1;
+    border-bottom: 1px solid #aaa;
+    font-family:Arial;
+  }
+
+  .inpt:focus {
+    outline:0;
+    border-bottom: 1px solid #555;
+  }
+
+  .static { position: static; }
+  .relative { position: relative; }
+  .absolute { position: absolute; }
+  .fixed { position: fixed; }
+  @media screen and (min-width: 48em) {
+   .static-ns { position: static; }
+   .relative-ns { position: relative; }
+   .absolute-ns { position: absolute; }
+   .fixed-ns { position: fixed; }
+  }
+  @media screen and (min-width: 48em) and (max-width: 64em) {
+   .static-m { position: static; }
+   .relative-m { position: relative; }
+   .absolute-m { position: absolute; }
+   .fixed-m { position: fixed; }
+  }
+  @media screen and (min-width: 64em) {
+   .static-l { position: static; }
+   .relative-l { position: relative; }
+   .absolute-l { position: absolute; }
+   .fixed-l { position: fixed; }
+  }
+
+  .f7 {
+    font-size: .75rem;
+  }
+
+  .f8 {
+    font-size: .70rem;
+  }
+
+
+  .no-display {
+    display: none;
+  }
+
+
+
+  .menu{
+    text-align: left;
+    display: inline;
+    margin: 0;
+    padding: 15px 4px 17px 0;
+    list-style: none;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    font: bold 12px/18px sans-serif;
+    display: inline-block;
+    margin-right: -4px;
+    position: relative;
+    padding: 15px 20px;
+    background: #fff;
+    cursor: pointer;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+
+  .menu:hover {
+    background: #555;
+    color: #fff;
+  }
+
+  .menu ul {
+      padding: 0;
+    position: absolute;
+
+    left: 0;
+    width: 150px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transiton: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -ms-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+    -transition: opacity 0.2s;
+    
+  }
+  .menu ul li { 
+    background: #555; 
+    display: block; 
+    color: #fff;
+    text-shadow: 0 -1px 0 #000;
+  }
+  .menu ul li:hover { background: #666; }
+  .menu:hover ul {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .hlayer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.2);
+  }
+
+
+  /* https://github.com/tachyons-css/tachyons-z-index */
+  .z-0 { z-index: 0; }
+  .z-1 { z-index: 1; }
+  .z-2 { z-index: 2; }
+  .z-3 { z-index: 3; }
+  .z-4 { z-index: 4; }
+  .z-5 { z-index: 5; }
+  .z-999 { z-index: 999; }
+  .z-9999 { z-index: 9999; }
+  .z-max { z-index: 2147483647; }
+  .z-inherit { z-index: inherit; }
+  .z-initial { z-index: initial; }
+  .z-unset { z-index: unset; }
+</style>
+<script src="https://cdn.jsdelivr.net/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/lodash/4.13.1/lodash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/react/15.2.1/react.min.js"></script>
+<script src="https://cdn.jsdelivr.net/react/15.2.1/react-dom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/react/15.2.1/react-dom-server.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.9.1/polyfill.min.js"></script>
+<script src="https://cdn.jsdelivr.net/babel/6.0.16/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/ace/1.2.3/min/ace.js"></script>
+<script src="https://cdn.jsdelivr.net/showdown/1.4.2/showdown.min.js"></script>
+</head>
+<body>
 <div id="root"></div>
-
+<script id="config" type="text/babel">
+window['config'] = 
+{
+  "elem":  `root`,
+  "docRoot":  `CV`,
+  "title":  `radiatr`,
+  "stylesheets":  [
+    `https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.0.2/tachyons.min.css`
+  ],
+  "scriptsLocal":  [
+    `libs/jquery.js`,
+    `libs/lodash.js`,
+    `libs/react.js`,
+    `libs/react-dom.js`,
+    `libs/react-dom-server.min.js`,
+    `libs/babel.min.js`,
+    `libs/polyfill.min.js`,
+    `libs/browser.min.js`,
+    `libs/ace.js`,
+    `libs/showdown.min.js`
+  ],
+  "scripts":  [
+    `https://cdn.jsdelivr.net/jquery/3.1.0/jquery.min.js`,
+    `https://cdn.jsdelivr.net/lodash/4.13.1/lodash.min.js`,
+    `https://cdn.jsdelivr.net/react/15.2.1/react.min.js`,
+    `https://cdn.jsdelivr.net/react/15.2.1/react-dom.min.js`,
+    `https://cdn.jsdelivr.net/react/15.2.1/react-dom-server.min.js`,
+    `https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js`,
+    `https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.9.1/polyfill.min.js`,
+    `https://cdn.jsdelivr.net/babel/6.0.16/browser.min.js`,
+    `https://cdn.jsdelivr.net/ace/1.2.3/min/ace.js`,
+    `https://cdn.jsdelivr.net/showdown/1.4.2/showdown.min.js`
+  ],
+  "datasets":  [
+    `data`,
+    `components`,
+    `app-css`
+  ]
+} ;
+</script>
+<script id="data-settings" type="text/babel">
+window['data-settings'] = 
+{
+  "dataset":  `data`,
+  "radiatr":  {
+    "editor":  `DataEdit`
+  } 
+} ;
+</script>
 <script id="data" type="text/babel">
-
-window['data'] = {
+window['data'] = 
+{
   name: "Nicolas Martinet",
   contact: [
     {name: "email",  val: "nicolas.martinet@gmail.com"},
@@ -87,17 +305,12 @@ Financial Analyst
 }]
 },
 };
-
-window['dataSettings'] = {
-  dataset: 'data', 
-  reactr:{
-    editor: 'DataEdit'
-  }
-}
-
-window['componentsSettings'] = {
-  dataset: 'components',
-  functions: `function() {
+</script>
+<script id="components-settings" type="text/babel">
+window['components-settings'] = 
+{
+  "dataset":  `components`,
+  "functions":  `function() {
     var self = {};
     self.registerComponent =  function(component, name){
       var presets = { presets: ['es2015', 'react'] };
@@ -112,18 +325,19 @@ window['componentsSettings'] = {
     };
 
     return self;
-  }`, 
-  hooks: {
-    'onInit': 'registerComponents',
-  },
-  reactr:{
-    editor: 'ComponentEditor',
-  }
-}
-
-
-window['components'] = {
-  ReactrRoot: `{
+  }`,
+  "hooks":  {
+    "onInit":  `registerComponents`
+  } ,
+  "radiatr":  {
+    "editor":  `ComponentEditor`
+  } 
+} ;
+</script>
+<script id="components" type="text/babel">
+window['components'] = 
+{
+  "RadiatrRoot":  `{
     init: function(){
       let self = this;
       let {datasets} = this.props;
@@ -146,7 +360,6 @@ window['components'] = {
     },
     render: function(){
       let {datasets} = this.state;
-      let {ctrls} = this.props;
       let self = this;
 
       let dsEditors = _.map(this.props.datasets, function(ds){
@@ -163,12 +376,12 @@ window['components'] = {
         <div className="cf">
 
           <div className="fl w-50">
-            <CV data={self.state.data} />
+            <Output data={self.state.data} q={self.state.funcs.data} />
           </div>
 
           <div className="fl w-50 pa3">
-            <h1 className="f1 tracked tr fw1 bb bw1 b--silver fw1">reactr</h1>
-            <ReactrControls  ctrls={ctrls} data={self.state.data} />
+            <h1 className="f1 tracked tr fw1 bb bw1 b--silver fw1">radiatr</h1>
+            <RadiatrControls data={self.state.data} />
             <Tabs selected="0">
               {dsEditors}
             </Tabs>
@@ -177,24 +390,15 @@ window['components'] = {
       )
     }
   }`,
-  Scratch: `{
+  "Output":  `{
     render: function(){
+      let {data, q} = this.props;
       return (
-        <div>
-          scratch
-          <ToggleMenu>
-            <ul>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-            </ul>
-          </ToggleMenu>
-        </div>
+        <CV data={data} />
       )
     }
   }`,
-  ToggleMenu: `{
+  "ToggleMenu":  `{
     toggleVisibility: function(){
       var visible = this.state.visible;
 
@@ -222,7 +426,7 @@ window['components'] = {
       return (
         <div className="">
           <a onClick={this.toggleVisibility}> 
-            \u270E
+            ✎
           </a>
           <div className={cn(cnames, 'z-1')}on>
             {this.props.children}
@@ -231,7 +435,46 @@ window['components'] = {
       )
     }
   }`,
-  ComponentEditor: `{
+  "RawEdit":  `{
+    save: function(){
+      let evaledCode;
+      this.props.q.updateValue([], this.editor.getValue());
+    },
+    setEditOptions: function(option){
+      this.editor.setOptions(option)
+    },
+    componentDidMount: function(){
+      this.editor = ace.edit('editor');
+      this.editor.setTheme("ace/theme/clouds");
+      this.editor.getSession().setMode("ace/mode/javascript");
+      this.editor.$blockScrolling = Infinity;
+      this.editor.setShowPrintMargin(false);
+      this.setEditOptions({
+        minLines: 25,
+        maxLines: 50,
+        fontSize: "14pt",
+      });
+      this.editor.setValue(pPrint(this.props.data))
+    },
+    render: function(){
+      var self = this;
+      let {data} = this.props;
+
+      return (
+        <div className="cf"> 
+          <div className="fl w-100">
+            <button className="btn" onClick={this.save}>
+              save
+            </button>
+          </div>
+          <div className="fl w-100" id="editor"> 
+          </div>
+        </div>
+      )
+
+    }
+  }`,
+  "ComponentEditor":  `{
     updateCurrentComponent: function(){
       let {selected, buffer} = this.state;
       let val = this.editor.getValue();
@@ -240,7 +483,7 @@ window['components'] = {
       this.props.q.updateValue([selected], val);
     },
     newComponent: function(name){
-      this.props.q.addKey([], name, "")
+      this.props.q.addKey([], name, newComponentTemplate(name))
       return "";
     },
     setEditOptions: function(option){
@@ -313,7 +556,7 @@ window['components'] = {
       )
     },
   }`,
-  ComponentEditorFileControls: `{
+  "ComponentEditorFileControls":  `{
     onApply: function(){
       this.props.updateComponent();
     },
@@ -352,7 +595,7 @@ window['components'] = {
       )
     },
   }`,
-  ComponentList: `{
+  "ComponentList":  `{
     onClick: function(key, evnt){
       evnt.preventDefault();
       this.props.onClick(key);
@@ -366,7 +609,7 @@ window['components'] = {
       let {components, buffer} = self.props;
 
       var compList = _.map(components, function(comp, key){
-        let modIndic = _.has(buffer, key) ? '\u2022' : "";
+        let modIndic = _.has(buffer, key) ? '•' : "";
         let cNames = cn(
           "ph3 pv3 bb b--light-silver",
           (key == self.props.selected) ? 'b' : ''
@@ -387,7 +630,7 @@ window['components'] = {
       );
     }
   }`,
-  TextInputButton: `{
+  "TextInputButton":  `{
     onChange: function(evnt){
       this.setState({value: evnt.target.value})
     },
@@ -412,12 +655,12 @@ window['components'] = {
       )
     }
   }`,
-  ReactrControls: `{
+  "RadiatrControls":  `{
     onSave: function(e){
-      this.props.ctrls.saveToFile();
+      saveToFile()
     },
     onSaveStatic: function(e){
-      this.props.ctrls.saveStaticDoc();
+      saveStaticDoc();
     },
     pData: function(){
       console.log(this.props.data)
@@ -439,7 +682,7 @@ window['components'] = {
       )
     }
   }`,
-  Tabs: `{
+  "Tabs":  `{
     getInitialState: function(){
       return {
         selected: this.props.selected || 0
@@ -448,7 +691,6 @@ window['components'] = {
     onClick: function(indx, evnt){
       evnt.preventDefault();
       this.setState({selected: indx})
-
     },
     render: function(){
       var self = this;
@@ -467,8 +709,8 @@ window['components'] = {
       var content = self.props.children[self.state.selected];
 
       return (
-        <div className="nowrap overflow-x-auto">
-          <div className="bb bw1 b--silver mb2">
+        <div className="">
+          <div className="bb bw1 b--silver mb2 nowrap overflow-x-auto">
             {tabList}
           </div>
           <div className="pa3 pt1">
@@ -479,7 +721,7 @@ window['components'] = {
       )
     }
   }`,
-  DataEdit: `{
+  "DataEdit":  `{
     render: function(){
       var self = this;
       let {data, q, path} = self.props;
@@ -493,7 +735,7 @@ window['components'] = {
       )
     }
   }`,
-  ObjectEditor: `{
+  "ObjectEditor":  `{
     modKey: function(path, newVal, evnt){
       this.props.q.modKey(path, newVal);
       return newVal
@@ -582,7 +824,7 @@ window['components'] = {
       );
     },
   }`,
-  TextInput: `{
+  "TextInput":  `{
     onChange: function(e){
       this.setState({val: e.target.value});
       if(e.target.value === this.props.data){
@@ -620,7 +862,7 @@ window['components'] = {
       if (this.state.mod && !(this.state.val === "")) {
         saveCtrls = (
           <a className="fl" onClick={this.onSave}>
-            \u2713
+            ✓
           </a>
         )
       };
@@ -664,7 +906,7 @@ window['components'] = {
       )
     },
   }`,
-  ArrayEditor: `{
+  "ArrayEditor":  `{
     addArray: function(path, evnt){
       this.props.q.addArray(path);
     },
@@ -681,7 +923,6 @@ window['components'] = {
     moveEntry: function(path, newPos, evnt){
       this.props.q.moveEntry(path, newPos);
       this.setState({data: this.props.data});
-      console.log(this.state)
     },
     getInitialState: function(){
       return {data: this.props.data};
@@ -806,7 +1047,7 @@ window['components'] = {
 
     },
   }`,
-  ValueEditor:  `{
+  "ValueEditor":  `{
     onChange: function(e){
       this.setState({val: e.target.value})
       this.props.q.updateValue(this.props.path, e.target.value)
@@ -830,7 +1071,7 @@ window['components'] = {
       )
     }
   }`,
-  Dropdown: `{
+  "Dropdown":  `{
     onChange: function(e){
       this.setState({value: e.target.value});
       this.props.onChange(e.target.value);
@@ -854,7 +1095,7 @@ window['components'] = {
       )
     },
   }`,
-  CV: `{
+  "CV":  `{
     render: function(){
       let {data} = this.props;
       let mdConverter = new showdown.Converter();
@@ -878,7 +1119,7 @@ window['components'] = {
       )
     },
   }`,
-  CVHeader: `{
+  "CVHeader":  `{
     render: function() {
       let {name} = this.props;
       return (
@@ -888,7 +1129,7 @@ window['components'] = {
       );
     }
   }`,
-  ContactList: `{
+  "ContactList":  `{
     render: function(){  
       
       let contact = _(this.props.contactInfo)
@@ -902,7 +1143,7 @@ window['components'] = {
       )
     }
   }`,
-  ContactBox: `{
+  "ContactBox":  `{
     render: function() {
       let {contactInfo} = this.props;
 
@@ -926,7 +1167,7 @@ window['components'] = {
 
     }
   }`,
-  CVSection: `{
+  "CVSection":  `{
     render: function(){
       return (
         <div className="fl mb5 w-100">
@@ -947,7 +1188,7 @@ window['components'] = {
       )
     }
   }`,
-  VList: `{
+  "VList":  `{
     render: function(){
       let listElems = _.map(this.props.elems, function(elem, i){
         return <li key={i} className="mb2">{elem}</li>
@@ -959,26 +1200,22 @@ window['components'] = {
       )
     }
   }`,
-  ChronoList: `{
+  "ChronoList":  `{
     render: function(){
       let self = this;
-      let {elems} = this.props;
-
-      
-      
-      if (self.props.mdConverter) {
-        elems = _.map(elems, function(elem){
-          elem.desc = self.props.mdConverter.makeHtml(elem.desc);
-          return elem;
-        })
-      }; 
+      let {elems, mdConverter} = this.props;
 
       let listElems = _.map(elems, function(elem, i){
         return (
           <li key={i} className="cf w-100 mb4">
             <div className="fl w-100-l w-20  b pr2 pb1">{elem.date}</div>
             <div className="fl w-100-l w-20 i pr4 pb1">{elem.title}</div>
-            <div className="fl w-100-l w-60" dangerouslySetInnerHTML={ {__html: elem.desc}}></div>
+            <div className="fl w-100-l w-60" >
+              {mdConverter
+                ? <MDBlock mdConverter={mdConverter} data={elem.desc} />
+                : elem.desc
+              }
+            </div>
           </li>
         )
       })
@@ -990,35 +1227,361 @@ window['components'] = {
       )
     }
   }`,
-};
+  "MDBlock":  `{
+    render: function(){
+      let self = this;
+      let {data, mdConverter} = this.props;
 
-window['config'] = {
-  elem:         'root',
-  docRoot:      'CV',
-  title:        'reactr',
-  stylesheets:  ["css/tachyons.min.css",  
-                 "css/style.css", 
-                ],
-  scripts:      [ "libs/jquery.js",
-                  "libs/lodash.js",
-                  "libs/react.js",
-                  "libs/react-dom.js",
-                  "libs/react-dom-server.min.js",
-                  "libs/babel.min.js",
-                  "libs/polyfill.min.js",
-                  "libs/browser.min.js",
-                  "libs/ace.js",
-                  "libs/showdown.min.js",
-                ],
-  datasets:     ['dataSettings', 
-                 'componentsSettings',
-                 ],
-}
-
+      let rendered = mdConverter.makeHtml(data);
+            
+      return (
+        <div dangerouslySetInnerHTML={ {__html: rendered}}></div>
+      )
+    }
+  }`
+} ;
 </script>
+<script id="app-css-settings" type="text/babel">
+window['app-css-settings'] = 
+{
+  "dataset":  `app-css`,
+  "functions":  `function() {
+      var self = {};
+
+      self.applyCSS = function(data){
+        $("#app-css").html(data);
+        return data;
+      };
+
+      return self;
+    }`,
+  "hooks":  {
+    "postUpdate":  `applyCSS`
+  } ,
+  "radiatr":  {
+    "editor":  `RawEdit`,
+    "saveData":  `function saveData(ds) {
+      return saveCSSDS(ds);
+    }`
+  } 
+} ;
+</script>
+<script type="text/babel">
+window['app-css'] = 
+`
+  .btn,
+  .btn:link,
+  .btn:visited {
+    border-style: solid;
+    border-width: 1px;
+    color: #111;
+    display: inline-block;
+    letter-spacing: .15em;
+    margin-bottom: .5em;
+    padding: 0.25em 1em;
+    text-decoration: none;
+    -webkit-transition: color .4s, background-color .4s, border .4s;
+            transition: color .4s, background-color .4s, border .4s;
+  }
+
+  .btn:hover {
+    color: #000;
+    border: 1px solid #000;
+    -webkit-transition: background-color .3s, color .3s, border .3s;
+            transition: background-color .3s, color .3s, border .3s;
+  }
+
+  .btn:active {
+    color: #000;
+    border: 1px solid #000;
+    -webkit-transition: background-color .3s, color .3s, border .3s;
+            transition: background-color .3s, color .3s, border .3s;
+  }
 
 
-<script id="reactr" type="text/babel">
+  .inpt{
+    margin:3px;
+    border:0;
+    padding:2px;
+    display:inline-block;
+    vertical-align:middle;
+    white-space:normal;
+    background:none;
+    line-height:1;
+    border-bottom: 1px solid #aaa;
+    font-family:Arial;
+  }
+
+  .inpt:focus {
+    outline:0;
+    border-bottom: 1px solid #555;
+  }
+
+  .static { position: static; }
+  .relative { position: relative; }
+  .absolute { position: absolute; }
+  .fixed { position: fixed; }
+  @media screen and (min-width: 48em) {
+   .static-ns { position: static; }
+   .relative-ns { position: relative; }
+   .absolute-ns { position: absolute; }
+   .fixed-ns { position: fixed; }
+  }
+  @media screen and (min-width: 48em) and (max-width: 64em) {
+   .static-m { position: static; }
+   .relative-m { position: relative; }
+   .absolute-m { position: absolute; }
+   .fixed-m { position: fixed; }
+  }
+  @media screen and (min-width: 64em) {
+   .static-l { position: static; }
+   .relative-l { position: relative; }
+   .absolute-l { position: absolute; }
+   .fixed-l { position: fixed; }
+  }
+
+  .f7 {
+    font-size: .75rem;
+  }
+
+  .f8 {
+    font-size: .70rem;
+  }
+
+
+  .no-display {
+    display: none;
+  }
+
+
+
+  .menu{
+    text-align: left;
+    display: inline;
+    margin: 0;
+    padding: 15px 4px 17px 0;
+    list-style: none;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    font: bold 12px/18px sans-serif;
+    display: inline-block;
+    margin-right: -4px;
+    position: relative;
+    padding: 15px 20px;
+    background: #fff;
+    cursor: pointer;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+
+  .menu:hover {
+    background: #555;
+    color: #fff;
+  }
+
+  .menu ul {
+      padding: 0;
+    position: absolute;
+
+    left: 0;
+    width: 150px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transiton: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -ms-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+    -transition: opacity 0.2s;
+    
+  }
+  .menu ul li { 
+    background: #555; 
+    display: block; 
+    color: #fff;
+    text-shadow: 0 -1px 0 #000;
+  }
+  .menu ul li:hover { background: #666; }
+  .menu:hover ul {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .hlayer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.2);
+  }
+
+
+  /* https://github.com/tachyons-css/tachyons-z-index */
+  .z-0 { z-index: 0; }
+  .z-1 { z-index: 1; }
+  .z-2 { z-index: 2; }
+  .z-3 { z-index: 3; }
+  .z-4 { z-index: 4; }
+  .z-5 { z-index: 5; }
+  .z-999 { z-index: 999; }
+  .z-9999 { z-index: 9999; }
+  .z-max { z-index: 2147483647; }
+  .z-inherit { z-index: inherit; }
+  .z-initial { z-index: initial; }
+  .z-unset { z-index: unset; }
+`;
+</script>
+<script id="radiatr" type="text/babel">
+  var radiatr;
+  
+  var evalES6 = function(code){
+    var evaled;
+    eval(Babel.transform(("evaled = " + code), 
+                         {presets: ['es2015', 'react']}).code);
+    return evaled;
+  };
+
+  var saveCSSDS = function(ds){
+      let content = "window['" + ds.q.getSettings().dataset + "'] = \n" + wrapTemplate(pPrint(ds.q.getData()))  + ";";
+
+      return {
+        css: ["<style type='text/css' id='" + ds.q.getSettings().dataset + "'>" + pPrint(ds.q.getData()) + "</style>"], 
+        body: ['<script type="text/babel">\n' + content + "\n" + "</" + "script>"]
+      }
+  };
+
+  var newComponentTemplate = function(name){
+    return `{
+  render: function(){
+    return (
+      <div>${name}</div>
+    )
+  }
+}`
+  };
+
+  var promptForSave = function(content){
+    var el = document.createElement('a');
+    el.setAttribute('href', 
+                    'data:text/plain;charset=utf-8,' 
+                    + encodeURIComponent(content));
+    
+    el.setAttribute('download', 'index.html');
+    el.style.display = 'none';
+
+    document.body.appendChild(el);
+    el.click();
+    document.body.removeChild(el);
+  };
+
+  var generateFile = function(content){
+    let indent= "  ";
+    //defaults
+    let {
+      title       = 'radiatr',
+      meta        = `<meta charset="utf-8" />`,
+      datasets    = [], 
+    } = content;
+
+    var body    = [], 
+        css     = [], 
+        scripts = [];
+   
+    let tmp =  _(datasets)
+                  .map(function(ds){
+                    return ds.q.saveDataset(ds);
+                  }).value()
+
+    _.forEach(tmp, function(v){
+      if(_.has(v, "body"))    body = body.concat(v["body"])
+      if(_.has(v, "css"))     css = css.concat(v["css"])
+      if(_.has(v, "scripts"))  scripts = scripts.concat(v["scripts"])
+    })
+
+    body =    _.reduce(body, (x, y) => `${x}\n${y}`)
+    css =     _.reduce(css, (x, y) => `${x}\n${y}`)
+    scripts = _.reduce(scripts, (x, y) => `${x}\n${y}`)
+    
+    let head = `<title>${title}</title>\n${meta}\n${css}\n${scripts}`
+    let bodyContent = `<div id="root"></div>\n${body}\n`
+
+    let fileContent = `<!DOCTYPE html>\n<html>\n<head>\n${head}\n</head>\n<body>\n${bodyContent}\n</body>\n<\html>`
+
+    return  fileContent
+  };
+
+  var saveToFile = function(){
+    let datasets = radiatr.getDatasets()
+    let currConf = datasets['config'].q.getData();
+
+    let fileContent = {
+      title:        currConf.title,
+      stylesheets:  currConf.stylesheets,
+      scripts:      currConf.scripts,
+      datasets:     datasets,
+                     
+    }
+    promptForSave(generateFile(fileContent))
+  };
+
+  var generateStaticDoc = function(content){
+    //defaults
+    let {
+      title       = 'radiatr',
+      meta        = `<meta charset="utf-8" />`,
+      stylesheets = [],
+      body        = ""
+    } = content;
+
+    let cssImports = _(stylesheets)
+                        .map((ss) => `<link rel="stylesheet" href="${ss}">`)
+                        .reduce((x, a) => `${x} \n        ${a}`);
+
+
+    let fileContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>${title}</title>
+        ${meta}
+        ${cssImports}
+      </head>
+      <body>
+        ${body}
+      </body>
+      </html>
+    `
+
+    return  fileContent
+  }
+
+  var saveStaticDoc = function(){
+    let datasets = radiatr.getDatasets()
+    let currConf = datasets['config'].q.getData();
+    let body = ReactDOMServer.renderToString(
+      React.createElement(window[currConf.docRoot], {data: datasets.data.data})
+    )
+    
+    let fileContent = {
+      title:        currConf.title,
+      title:        currConf.title,
+      stylesheets:  currConf.stylesheets,
+      body:         body
+
+    };
+
+    promptForSave(generateStaticDoc(fileContent))
+  };
+
   var cn = function(){
     return _.chain(arguments)
             .flattenDeep()
@@ -1034,21 +1597,64 @@ window['config'] = {
               return d + " " + a;
             })
             .value()
-  }
+  };
 
   var ils = function(){
 
     return arguments
-  }
+  };
+
+  var pPrint = function(c){
+    let indent = (l) => "  ".repeat(l)
+    var getType = function(v){
+      if ((typeof(v) === 'object') && !Array.isArray(v)) return 'Object';
+      if (Array.isArray(v)) return 'Array';
+      return 'Value';
+    }
+    let toTypeString = {
+      'Object': function(o, l){
+        let self = this;
+        let cnt = _(o)
+                    .map(function(v, k){
+                      let lvl=l+1;
+                      return `${indent(lvl)}"${k}":  ${self[getType(v)](v, lvl)}`
+                    })
+                    .reduce((a, b) => `${a},\n${b}`)
+        return `{\n${cnt}\n${indent(l)}} `
+      },
+      'Array': function(o, l){
+        let self = this;
+        let cnt = _(o)
+                    .map(function(v){
+                      let lvl = l+1
+                      return `${indent(lvl)}${self[getType(v)](v, lvl)}`
+                    })
+                    .reduce((a, b) => `${a},\n${b}`)
+        return `[\n${cnt}\n${indent(l)}]`
+      },
+      'Value': function(o, l){
+        return `\`${o}\``
+      }
+    };
+
+    return _.isString(c) ? c : toTypeString[getType(c)](c, 0);
+  };
+
+  var wrapTemplate = function(v){
+
+    return `\`${v}\``
+  };
 
   var Container = function(settings){
     var data;
     var name;
     var editor;
     var functions;
+    var settings = settings;
     var callbacks = {
       'onInit':   [],
       'onChange': [],
+      'postUpdate': [],
     };
 
     var types = {
@@ -1057,6 +1663,19 @@ window['config'] = {
       'Value': '',
     };
 
+    var defaultSettings = {
+      dataset: 'data', 
+      radiatr:{
+        editor: 'RawEdit',
+        getData: function(dataset){
+          return window[dataset]
+        },
+        saveData: function(ds){
+          let content = `window['${ds.q.getSettings().dataset}'] = \n${pPrint(ds.q.getData())};`;
+          return {body: [`<script id="${ds.q.getSettings().dataset}" type="text/babel">\n${content}\n` + "</" + "script>"]}
+        },
+      }
+    };
 
     var registerCallback = function(evnt, cb){
       if(!_.has(callbacks, evnt)) callbacks[evnt] = [];
@@ -1081,6 +1700,15 @@ window['config'] = {
         return data
       }
       data = _doOn(data, path, cb);
+
+      if(_.has(callbacks, 'postUpdate')){
+        if (callbacks['postUpdate'].length > 0) {
+          _.forEach(callbacks['postUpdate'], function(cb){
+            data = cb(data);
+          });
+        };
+      };
+
       trigger('onChange', data)
     };
 
@@ -1149,19 +1777,19 @@ window['config'] = {
       })
     };
 
-    var addArray = function(path){
+    var addArray = function(path, newValue){
+      let val = newValue || "";
       doOn(path, function(d){
-        d.push("")
+        d.push(val);
         return d;
       })
     };
+
 
     var moveEntry = function(path, newPos){
       var arrayPath = path;
       var curPos = path.pop();
       var newPos = newPos;
-
-
 
       doOn(arrayPath, function(d){
         let arr = d;
@@ -1177,9 +1805,10 @@ window['config'] = {
 
         return d;
       });
-    }
+    };
 
     var getTypes = function(){
+
       return types
     };
 
@@ -1191,14 +1820,37 @@ window['config'] = {
     };
 
     var getData = function(){
+
       return data;
+    }
+
+    var getSettings = function(){
+      return settings;
+    };
+
+    var saveDataset = function(ds){
+      let tmpSettings = _.merge({}, defaultSettings, settings);
+      let save = _.isString(tmpSettings.radiatr.saveData)
+                  ? evalES6(tmpSettings.radiatr.saveData)
+                  : tmpSettings.radiatr.saveData
+
+      return save(ds); 
     }
    
   
     var init = function(settings){
-      data      = window[settings.dataset];
+      if (_.isString(settings)){
+        let tmpSettings = defaultSettings;
+        tmpSettings.dataset = settings;
+        settings = tmpSettings;
+      }
+
+      let tmpSettings = _.cloneDeep(defaultSettings);
+      tmpSettings = _.merge(defaultSettings, settings);
+
+      data      = tmpSettings.radiatr.getData(settings.dataset);
       name      = settings.dataset;
-      editor    = settings.reactr.editor;
+      editor    = settings.radiatr.editor;
       if(settings.functions){
         var presets = { presets: ['es2015', 'react'] };
         var compCode = "functions = " + settings.functions + "()";
@@ -1222,6 +1874,8 @@ window['config'] = {
         addArray: addArray,
         moveEntry: moveEntry,
         changeType: changeType,
+        getSettings: getSettings,
+        saveDataset: saveDataset,
       })
 
       if( _.has(settings, 'hooks')){
@@ -1242,227 +1896,110 @@ window['config'] = {
     }
   };
 
-  var Reactr = function(){
-    var self        = this;
+  var radiatrCodeContainerSettings = {
+    dataset: 'radiatr',
+    radiatr: {
+      editor: 'RawEdit',
+      getData: function(ds){
+        return $('html').find('#radiatr').html();
+      },
+      saveData: function(ds){
+        return {body: [`<script id="radiatr" type="text/babel">` + ds.q.getData() + "</" + "script>"]};
+      },
+    }
+  };
+
+  var evaledContainerSettings = {
+    functions: `function() {
+      var self = {};
+
+      self.evalUpdate = function(data){
+        return evalES6(data);
+      };
+
+      return self;
+    }`, 
+    hooks: {
+      'postUpdate': 'evalUpdate'
+    },
+    radiatr: {
+      editor: 'RawEdit',
+    }
+  };
+
+  var configContainerSettings = {
+    'dataset': 'config',
+    radiatr: {
+      saveData: function(ds){
+        let data = ds.q.getData();
+        let cssImports = _.map(data.stylesheets, (ss) => `<link rel="stylesheet" href="${ss}">`)
+        let scriptImports = _.map(data.scripts, (sf) => `<script src="${sf}">` + "</" + "script>")
+
+        let content = `window['${ds.q.getSettings().dataset}'] = \n${pPrint(ds.q.getData())};`;
+        let bodyContent = `<script id="${ds.q.getSettings().dataset}" type="text/babel">\n${content}\n` + "</" + "script>";
+
+        return {
+          css: cssImports,
+          scripts: scriptImports,
+          body: [bodyContent],
+        }
+
+      }
+    },
+  };
+
+  var Radiatr = function(){
+    var self            = this;
     var config;
     var datasets        = {};
-    var ctrls           = {};
 
-    var pPrint = function(c){
-      var getType = function(v){
-        if ((typeof(v) === 'object') && !Array.isArray(v)) return 'Object';
-        if (Array.isArray(v)) return 'Array';
-        return 'Value';
-      }
-      let toTypeString = {
-        'Object': function(o){
-          let self = this;
-          let cnt = _(o)
-                      .map(function(v, k){
-                        return `"${k}":  ${self[getType(v)](v)}`
-                      })
-                      .reduce((a, b) => `${a}, \n ${b}`)
-          return `{${cnt}} `
-        },
-        'Array': function(o){
-          let self = this;
-          let cnt = _(o)
-                      .map(function(v){
-                        return `${self[getType(v)](v)}`
-                      })
-                      .reduce((a, b) => `${a}, \n ${b}`)
-          return `[${cnt}]`
-        },
-        'Value': function(o){
-          return `\`${o}\``
-        }
-      };
-
-      return toTypeString[getType(c)](c);
-    }
-
-    var promptForSave = function(content){
-      var el = document.createElement('a');
-      el.setAttribute('href', 
-                      'data:text/plain;charset=utf-8,' 
-                      + encodeURIComponent(content));
-      
-      el.setAttribute('download', 'index.html');
-      el.style.display = 'none';
-
-      document.body.appendChild(el);
-      el.click();
-      document.body.removeChild(el);
+    var getDatasets = function(){
+      return datasets;
     };
 
-    var getReactrCode = function(){
-
-      return $('html').find('#reactr').html();
-    }
-
-    var generateFile = function(content){
-      //defaults
-      let {
-        title       = 'reactr',
-        meta        = `<meta charset="utf-8" />`,
-        stylesheets = [],
-        scripts     = [],
-        datasets    = [], 
-      } = content;
-
-      let reactrCode = `<script id="reactr" type="text/babel">` + getReactrCode() + "</" + "script>";
-
-      let cssImports = _(stylesheets)
-                          .map((ss) => `<link rel="stylesheet" href="${ss}">`)
-                          .reduce((x, a) => `${x} \n        ${a}`);
-
-      //split closing tag - browser would interpret it as the closing tag of the 
-      //current scirpt instead of a template
-      let scriptImports = _(scripts)
-                            .map((sf) => `<script src="${sf}">` + "</" + "script>")
-                            .reduce((x, a) => `${x} \n        ${a}`);
-
-
-      let dsString = function(dataset){
-        let content = `window['${dataset.name}'] = ${pPrint(dataset.data)};`;
-        return `<script id="${dataset.name}" type="text/babel">` + content + "</" + "script>"
-      };
-      let inlineData = _(datasets).map(dsString).reduce( (d, a) => `${d} \n ${a}` )                          
-
-      let fileContent = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>${title}</title>
-          ${meta}
-          ${cssImports}
-          ${scriptImports}
-        </head>
-        <body>
-          <div id="root"></div>
-          ${inlineData}
-          ${reactrCode}
-        </body>
-        </html>
-      `
-
-      return  fileContent
-    };
-
-    var saveToFile = function(){
-      let currConf = config;
-
-      let dataSets = _(currConf.datasets)
-                      .map(function(ds){
-                        let dsSettings = window[ds];
-                        let name = dsSettings.dataset;
-                        return [
-                          {name: ds, data: dsSettings}, 
-                          {name: name, data: datasets[name].q.getData()}
-                        ]
-                      })
-                      .flatten()
-                      .value();
-
-      dataSets.push({name: 'config', data: config});
-
-
-      let fileContent = {
-        title:        currConf.title,
-        stylesheets:  currConf.stylesheets,
-        scripts:      currConf.scripts,
-        datasets:     dataSets,
-                       
-      }
-      promptForSave(generateFile(fileContent))
-    };
-
-    var generateStaticDoc = function(content){
-      //defaults
-      let {
-        title       = 'reactr',
-        meta        = `<meta charset="utf-8" />`,
-        stylesheets = [],
-        body        = ""
-      } = content;
-
-      let cssImports = _(stylesheets)
-                          .map((ss) => `<link rel="stylesheet" href="${ss}">`)
-                          .reduce((x, a) => `${x} \n        ${a}`);
-
-
-      let fileContent = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>${title}</title>
-          ${meta}
-          ${cssImports}
-        </head>
-        <body>
-          ${body}
-        </body>
-        </html>
-      `
-
-      return  fileContent
-    }
-
-    var saveStaticDoc = function(){
-      let currConf = config
-      let body = ReactDOMServer.renderToString(
-        React.createElement(window[currConf.docRoot], {data: datasets.data.data})
-      )
-      
-      let fileContent = {
-        title:        currConf.title,
-        title:        currConf.title,
-        stylesheets:  currConf.stylesheets,
-        body:         body
-
-      };
-
-      promptForSave(generateStaticDoc(fileContent))
-    };
-
-    var init = function(){
-      config = window["config"];
-      _(config.datasets)
-        .forEach(function(ds){
-          let dsSettings = window[ds];
-          datasets[dsSettings.dataset] = Container(dsSettings);
-        });
-    };
-
-    init();
-
-    ctrls = {
-      saveToFile: saveToFile,
-      saveStaticDoc: saveStaticDoc,
-    }
 
     var run = function(){
       const rootElement = document.getElementById(config.elem)
 
       ReactDOM.render(
-        <ReactrRoot datasets={datasets} ctrls={ctrls} />,
+        <RadiatrRoot datasets={datasets} />,
         rootElement
       );
     };
 
+    var init = function(){
+      config = window["config"];
+
+      datasets['config'] = Container( _.merge({}, evaledContainerSettings, configContainerSettings))
+
+      
+      _(config.datasets)
+        .forEach(function(ds){
+          let settingsName = `${ds}-settings`
+          if(_.has(window, settingsName)){
+            let dsSettings = window[settingsName];
+            datasets[settingsName] = Container( _.merge({}, evaledContainerSettings, {'dataset':  settingsName}))
+            datasets[ds] = Container(dsSettings);
+          } else {
+            datasets[ds] = Container(ds);
+          }
+        });
+
+      datasets['radiatr'] = Container(radiatrCodeContainerSettings);
+    };
+
+    init();
+
     return {
       run: run,
+      getDatasets: getDatasets,
     }
 
   }
 
-  var reactr = Reactr();
-
-  reactr.run();
-
+  radiatr = Radiatr();
+  radiatr.run();
 </script>
 
-
-
-
-</body></html>
+</body>
+<html>
