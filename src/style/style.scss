@@ -1,0 +1,158 @@
+@charset "utf-8";
+@import '_reset.scss';
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,800');
+
+body {
+  font-family: 'Roboto'
+}
+
+h1, h2, h3 {
+  font-weight: 800;
+}
+
+ul {
+  li {
+    padding-bottom: 2px;
+    list-style: square;
+    margin-left: 20px;
+  }
+}
+
+.container {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.header {
+  margin: 20px 0 0 0;
+  text-align: right;
+  border-bottom: 1px solid black;
+
+  h1 {
+    font-size: 2.5em;
+    letter-spacing: 0.10em;
+  }
+}
+
+.contact {
+  text-align: right;
+  font-size: 1em;
+  padding-bottom: 20px;
+}
+
+section {
+  margin-bottom: 25px;
+
+  & > header {
+    margin-bottom: 5px;
+    h2 {
+      font-size: 1.5em;
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &:after {
+        content: "";
+        flex-grow: 1;
+        border-bottom: 2px solid black;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.tech-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .tech-item {
+    width: 200px;
+    padding-bottom: 5px;
+  }  
+}
+
+.exp-entry {
+  margin-bottom: 10px;
+  & > header {
+    padding-bottom:5px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+
+    .title {
+      font-size: 1.15em;
+      font-weight: 800;
+      padding-right: 10px;
+    }
+
+    .company {
+      padding-right: 10px;
+    }
+
+    .date {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &:before {
+        content: "";
+        flex-grow: 1;
+        border-bottom: 1px solid grey;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  @media print {
+    page-break-inside: avoid;
+  }
+
+}
+
+.education {
+  @media print {
+    page-break-inside: avoid;
+  }
+}
+
+.edu-entry {
+  padding-bottom: 10px;
+  & > header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+
+    .degree {
+      padding-right: 10px;
+    }
+
+    .date {
+      flex-grow: 1;
+      text-align: right;
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &:before {
+        content: "";
+        flex-grow: 1;
+        border-bottom: 1px solid grey;
+
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.no-print {
+  @media print {
+    display: none;
+  }
+}
